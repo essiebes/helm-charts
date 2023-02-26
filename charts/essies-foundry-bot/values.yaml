@@ -15,7 +15,7 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-configMapRef: "essies-foundry-bot-secret"
+configMapRef: "essies-foundry-bot-config"
 secretRef: "essies-foundry-bot-secret"
 
 serviceAccount:
