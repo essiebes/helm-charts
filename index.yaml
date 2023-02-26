@@ -100,4 +100,19 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/essies-foundry-bot-0.1.1/essies-foundry-bot-0.1.1.tgz
     version: 0.1.1
-generated: "2023-02-26T20:15:51.703276223Z"
+  essies-server-tool:
+  - apiVersion: v2
+    appVersion: 1.0.2
+    created: "2023-02-26T20:54:42.439327971Z"
+    description: Pterodactyl Control Discord Bot
+    digest: c140c8050e56f46da18c892cd29c2f27370e50fca3c40882e23a56ddd7a63cca
+    maintainers:
+    - email: essie@essiebes.nl
+      name: essiebes
+      url: https://essiebes.nl
+    name: essies-server-tool
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/essies-server-tool-0.1.0/essies-server-tool-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-02-26T20:54:42.439341771Z"
