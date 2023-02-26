@@ -3,6 +3,20 @@ entries:
   essies-emoji-counter:
   - apiVersion: v2
     appVersion: 1.0.5
+    created: "2023-02-26T18:59:02.008659838Z"
+    description: Emoji Counter Discord Bot
+    digest: a231243a4c8817dfef5809b6bc47700aaac06f83d7a227552d583dcd0139827b
+    maintainers:
+    - email: essie@essiebes.nl
+      name: essiebes
+      url: https://essiebes.nl
+    name: essies-emoji-counter
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/essies-emoji-counter-0.1.2/essies-emoji-counter-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.0.5
     created: "2023-02-26T17:11:33.779499842Z"
     description: Emoji Counter Discord Bot
     digest: 3efc505b0058ec5022f8185f15e7028a80042bd83c8b7d3785dd6f6042e57fda
@@ -18,6 +32,20 @@ entries:
   essies-foundry-bot:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2023-02-26T18:59:02.215654863Z"
+    description: Foundry Control Pterodactyl Discord Bot
+    digest: e4d88387c82e7c345f77b7dd6aed71e744403c7b971e6128803e5c10dcf70f8f
+    maintainers:
+    - email: essie@essiebes.nl
+      name: essiebes
+      url: https://essiebes.nl
+    name: essies-foundry-bot
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/essies-foundry-bot-0.1.2/essies-foundry-bot-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2023-02-26T17:11:33.964988487Z"
     description: Foundry Control Pterodactyl Discord Bot
     digest: 6cb43ada9a9e62e11ff8a60a62d84b8ed0b1a40268ce040ce8cccd1ee9ac6258
@@ -30,4 +58,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/essies-foundry-bot-0.1.1/essies-foundry-bot-0.1.1.tgz
     version: 0.1.1
-generated: "2023-02-26T17:11:33.964993587Z"
+generated: "2023-02-26T18:59:02.215666163Z"
