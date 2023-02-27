@@ -15,7 +15,7 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-configMapRef: "essies-emoji-counter-secret"
+configMapRef: "essies-emoji-counter-config"
 secretRef: "essies-emoji-counter-secret"
 
 serviceAccount:
