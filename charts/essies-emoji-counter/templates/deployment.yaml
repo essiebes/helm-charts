@@ -14,6 +14,8 @@ spec:
   selector:
     matchLabels:
       {{- include "essies-emoji-counter.selectorLabels" . | nindent 6 }}
+  strategy:
+    {{- toYaml .Values.strategy | nindent 4 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -30,8 +32,6 @@ spec:
       serviceAccountName: {{ include "essies-emoji-counter.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      strategy:
-        {{- toYaml .Values.strategy | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
