@@ -51,6 +51,13 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Default image tag
+*/}}
+{{- define "essies-emoji-counter.imageTag" -}}
+{{- if .Values.image.tag }}{{ .Values.image.tag }}{{- else }}essies-emoji-counter-{{ .Chart.AppVersion }}{{- end }}
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "essies-emoji-counter.serviceAccountName" -}}

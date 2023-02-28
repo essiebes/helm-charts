@@ -34,7 +34,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "essies-emoji-counter-{{ .Chart.AppVersion }}" }}"
+          image: "{{ .Values.image.repository }}:{{ include "essies-emoji-counter.imageTag" . }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - mountPath: /app/db
