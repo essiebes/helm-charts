@@ -2,6 +2,20 @@ apiVersion: v1
 entries:
   essies-emoji-counter:
   - apiVersion: v2
+    appVersion: 1.0.7
+    created: "2023-02-28T11:11:23.927928866Z"
+    description: Emoji Counter Discord Bot
+    digest: 5a54c3a93b0975c62fd5b245b596ddc504e413b040ba0aa275d11fb7f5e10398
+    maintainers:
+    - email: essie@essiebes.nl
+      name: essiebes
+      url: https://essiebes.nl
+    name: essies-emoji-counter
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/essies-emoji-counter-0.1.6/essies-emoji-counter-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
     appVersion: 1.0.6
     created: "2023-02-28T11:06:11.077895883Z"
     description: Emoji Counter Discord Bot
@@ -143,4 +157,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/essies-server-tool-0.1.0/essies-server-tool-0.1.0.tgz
     version: 0.1.0
-generated: "2023-02-28T11:06:11.077917984Z"
+generated: "2023-02-28T11:11:23.927951566Z"
