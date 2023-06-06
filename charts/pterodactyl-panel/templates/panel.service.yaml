@@ -8,8 +8,8 @@ spec:
   type: {{ .Values.panel.service.type }}
   ports:
     - port: {{ .Values.panel.service.port }}
-      targetPort: https
+      targetPort: http
       protocol: TCP
-      name: https
+      name: http
   selector:
     {{- include "pterodactyl.selectorLabels.panel" . | nindent 4 }}

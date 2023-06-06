@@ -37,9 +37,13 @@ spec:
           image: "{{ .Values.panel.image.repository }}:{{ .Values.panel.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.panel.image.pullPolicy }}
           ports:
-            - name: https
-              containerPort: {{ .Values.panel.service.internalPort | default 443 }}
+            - name: http
+              containerPort: {{ .Values.panel.service.internalPort | default 80 }}
               protocol: TCP
+          volumeMounts:
+            - mountPath: "/app/var"
+              name: app-var
+              subPath: env
           env:
             - name: REDIS_HOST
               value: {{ include "pterodactyl.fullname" . }}-cache.{{ .Release.Namespace }}.{{ .Values.clusterDomain }}
@@ -55,18 +59,18 @@ spec:
           {{- if .Values.probesEnabled }}
           startupProbe:
             tcpSocket:
-              port: https
+              port: http
             failureThreshold: 12
             periodSeconds: 10
           livenessProbe:
             tcpSocket:
-              port: https
+              port: http
             periodSeconds: 20
             failureThreshold: 1
           readinessProbe:
             httpGet:
               path: /
-              port: https
+              port: http
               scheme: HTTPS
             initialDelaySeconds: 10
             periodSeconds: 10
@@ -85,3 +89,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: app-var
+          emptyDir:
+            sizeLimit: 10Mi
