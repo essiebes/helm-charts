@@ -68,3 +68,25 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Registers the config map reference
+*/}}
+{{- define "pterodactyl.configMapRef" -}}
+{{- if .Values.config.existingRef }}
+{{- printf "%s" .Values.config.existingRef }}
+{{- else }}
+{{- printf "%s-config" (include "pterodactyl.fullname" .) }}
+{{- end }}
+{{- end }}
+
+{{/*
+Registers the secret reference
+*/}}
+{{- define "pterodactyl.secretRef" -}}
+{{- if .Values.secrets.existingRef }}
+{{- printf "%s" .Values.secrets.existingRef }}
+{{- else }}
+{{- printf "%s-secrets" (include "pterodactyl.fullname" .) }}
+{{- end }}
+{{- end }}

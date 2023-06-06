@@ -40,6 +40,13 @@ spec:
             - name: https
               containerPort: {{ .Values.panel.service.internalPort | default 443 }}
               protocol: TCP
+          env:
+            - name: REDIS_HOST
+              value: {{ include "pterodactyl.fullname" . }}-cache.{{ .Release.Namespace }}.{{ .Values.clusterDomain }}
+            - name: REDIS_PASSWORD
+              value: "null"
+            - name: REDIS_PORT
+              value: {{ .Values.cache.service.port | default 6379 }}
           envFrom:
             - configMapRef:
                 name: {{ include "pterodactyl.configMapRef" . }}

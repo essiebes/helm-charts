@@ -1,0 +1,221 @@
+---
+# Source: pterodactyl-panel/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pterodactyl-panel-secrets
+  labels:
+    helm.sh/chart: pterodactyl-panel-0.1.0
+    app.kubernetes.io/instance: pterodactyl-panel
+    app.kubernetes.io/version: "v1.11.3"
+    app.kubernetes.io/managed-by: Helm
+data:
+  APP_KEY: 
+
+  MAIL_DRIVER: log
+  MAIL_HOST: 
+  MAIL_PORT: 465
+  MAIL_USERNAME: 
+  MAIL_PASSWORD: 
+  MAIL_ENCRYPTION: 
+  MAIL_FROM:
+---
+# Source: pterodactyl-panel/templates/config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pterodactyl-panel-config
+  labels:
+    helm.sh/chart: pterodactyl-panel-0.1.0
+    app.kubernetes.io/instance: pterodactyl-panel
+    app.kubernetes.io/version: "v1.11.3"
+    app.kubernetes.io/managed-by: Helm
+data:
+  APP_ENV: production
+  APP_DEBUG: false
+  APP_URL: http://panel.example.com
+  APP_TIMEZONE: UTC
+  APP_SERVICE_AUTHOR: noreply@example.com
+  APP_CLEAR_TASKLOG: 
+  APP_DELETE_MINUTES: 10
+  PTERODACTYL_FILES_MAX_EDIT_SIZE: "5000000"
+  APP_ENVIRONMENT_ONLY: "false"
+  APP_LOCALE: "en"
+
+  QUEUE_HIGH: "high"
+  QUEUE_STANDARD: "standard"
+  QUEUE_LOW: "low"
+
+  CACHE_DRIVER: "redis"
+  SESSION_DRIVER: "redis"
+  QUEUE_CONNECTION: "redis"
+
+  SESSION_SECURE_COOKIE: "true"
+
+  REDIS_HOST: pterodactyl-panel-cache.default.cluster.local
+  REDIS_PASSWORD: "null"
+  REDIS_PORT: 6379
+---
+# Source: pterodactyl-panel/templates/cache.service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pterodactyl-panel-cache
+  labels:
+    helm.sh/chart: pterodactyl-panel-0.1.0
+    app.kubernetes.io/instance: pterodactyl-panel
+    app.kubernetes.io/version: "v1.11.3"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 6379
+      targetPort: redis
+      protocol: TCP
+      name: redis
+  selector:
+    app.kubernetes.io/name: pterodactyl-panel-cache
+    app.kubernetes.io/instance: pterodactyl-panel
+---
+# Source: pterodactyl-panel/templates/panel.service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pterodactyl-panel
+  labels:
+    helm.sh/chart: pterodactyl-panel-0.1.0
+    app.kubernetes.io/instance: pterodactyl-panel
+    app.kubernetes.io/version: "v1.11.3"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 443
+      targetPort: https
+      protocol: TCP
+      name: https
+  selector:
+    app.kubernetes.io/name: pterodactyl-panel
+    app.kubernetes.io/instance: pterodactyl-panel
+---
+# Source: pterodactyl-panel/templates/cache.deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 'pterodactyl-panel-cache'
+  labels:
+    helm.sh/chart: pterodactyl-panel-0.1.0
+    app.kubernetes.io/instance: pterodactyl-panel
+    app.kubernetes.io/version: "v1.11.3"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pterodactyl-panel-cache
+      app.kubernetes.io/instance: pterodactyl-panel
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pterodactyl-panel-cache
+        app.kubernetes.io/instance: pterodactyl-panel
+    spec:
+      serviceAccountName: pterodactyl-panel
+      securityContext:
+        {}
+      containers:
+        - name: redis
+          securityContext:
+            {}
+          image: "redis:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          startupProbe:
+            tcpSocket:
+              port: redis
+            failureThreshold: 12
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: redis
+            periodSeconds: 20
+            failureThreshold: 1
+          readinessProbe:
+            tcpSocket:
+              port: redis
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            {}
+---
+# Source: pterodactyl-panel/templates/panel.deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pterodactyl-panel
+  labels:
+    helm.sh/chart: pterodactyl-panel-0.1.0
+    app.kubernetes.io/instance: pterodactyl-panel
+    app.kubernetes.io/version: "v1.11.3"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pterodactyl-panel
+      app.kubernetes.io/instance: pterodactyl-panel
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pterodactyl-panel
+        app.kubernetes.io/instance: pterodactyl-panel
+    spec:
+      serviceAccountName: pterodactyl-panel
+      securityContext:
+        {}
+      containers:
+        - name: panel
+          securityContext:
+            {}
+          image: "ghcr.io/pterodactyl/panel:v1.11.3"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          env:
+            - name: REDIS_HOST
+              value: pterodactyl-panel-cache.default.cluster.local
+            - name: REDIS_PASSWORD
+              value: "null"
+            - name: REDIS_PORT
+              value: 6379
+          envFrom:
+            - configMapRef:
+                name: pterodactyl-panel-config
+            - secretRef:
+                name: pterodactyl-panel-secrets
+          startupProbe:
+            tcpSocket:
+              port: https
+            failureThreshold: 12
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: https
+            periodSeconds: 20
+            failureThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /
+              port: https
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            {}

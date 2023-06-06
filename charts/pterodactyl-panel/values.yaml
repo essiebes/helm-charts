@@ -2,6 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+clusterDomain: cluster.local
 revisionHistoryLimit: 3
 probesEnabled: true
 
@@ -20,6 +21,7 @@ cache:
   service:
     type: ClusterIP
     port: 6379
+    internalPort: ""
 
   resources: {}
 
@@ -35,6 +37,7 @@ panel:
   service:
     type: ClusterIP
     port: 443
+    internalPort: ""
 
   resources: {}
 
@@ -42,9 +45,13 @@ config:
   existingRef: ""
 
   panel:
+    environment: production
+    debug: false
     appUrl: "http://panel.example.com"
     appTimezone: "UTC"
     serviceAuthor: "noreply@example.com"
+    deleteMinutes: 10
+
     logChannel: "stderr"
     trustedProxies: "*"
 
