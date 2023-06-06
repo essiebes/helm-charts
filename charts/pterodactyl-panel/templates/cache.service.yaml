@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pterodactyl.fullname" . }}-cache
+  labels:
+    {{- include "pterodactyl.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.cache.service.type }}
+  ports:
+    - port: {{ .Values.cache.service.port }}
+      targetPort: redis
+      protocol: TCP
+      name: redis
+  selector:
+    {{- include "pterodactyl.selectorLabels.cache" . | nindent 4 }}

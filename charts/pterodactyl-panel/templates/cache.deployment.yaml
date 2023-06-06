@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: '{{ include "pterodactyl.fullname" . }}-cache'
+  labels:
+    {{- include "pterodactyl.labels" . | nindent 4 }}
+spec:
+  {{- if and (.Values.cache.replicaCount) }}
+  replicas: {{ .Values.cache.replicaCount }}
+  {{- end }}
+  {{- if .Values.revisionHistoryLimit }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "pterodactyl.selectorLabels.cache" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "pterodactyl.selectorLabels.cache" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "pterodactyl.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: redis
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.cache.image.repository }}:{{ .Values.cache.image.tag }}"
+          imagePullPolicy: {{ .Values.cache.image.pullPolicy }}
+          ports:
+            - name: redis
+              containerPort: {{ .Values.cache.service.internalPort | default 6379 }}
+              protocol: TCP
+          startupProbe:
+            tcpSocket:
+              port: redis
+            failureThreshold: 12
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: redis
+            periodSeconds: 20
+            failureThreshold: 1
+          readinessProbe:
+            tcpSocket:
+              port: redis
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.cache.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

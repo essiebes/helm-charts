@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pterodactyl.fullname" . }}
+  labels:
+    {{- include "pterodactyl.labels" . | nindent 4 }}
+spec:
+  {{- if and (.Values.panel.replicaCount) }}
+  replicas: {{ .Values.panel.replicaCount }}
+  {{- end }}
+  {{- if .Values.revisionHistoryLimit }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "pterodactyl.selectorLabels.panel" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "pterodactyl.selectorLabels.panel" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "pterodactyl.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: panel
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.panel.image.repository }}:{{ .Values.panel.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.panel.image.pullPolicy }}
+          ports:
+            - name: https
+              containerPort: {{ .Values.panel.service.internalPort | default 443 }}
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: {{ include "pterodactyl.configMapRef" . }}
+            - secretRef:
+                name: {{ include "pterodactyl.secretRef" . }}
+          {{- if .Values.probesEnabled }}
+          startupProbe:
+            tcpSocket:
+              port: https
+            failureThreshold: 12
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: https
+            periodSeconds: 20
+            failureThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /
+              port: https
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          {{- end }}
+          resources:
+            {{- toYaml .Values.panel.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
