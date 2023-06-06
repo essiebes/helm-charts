@@ -6,13 +6,13 @@ metadata:
   labels:
     {{- include "pterodactyl.labels" . | nindent 4 }}
 data:
-  APP_ENV: {{ .Values.config.panel.environment }}
-  APP_DEBUG: {{ .Values.config.panel.debug | toString }}
-  APP_URL: {{ .Values.config.panel.appUrl }}
-  APP_TIMEZONE: {{ .Values.config.panel.appTimezone }}
-  APP_SERVICE_AUTHOR: {{ .Values.config.panel.serviceAuthor }}
-  APP_CLEAR_TASKLOG: {{ .Values.config.panel.clearTaskLog }}
-  APP_DELETE_MINUTES: {{ .Values.config.panel.deleteMinutes }}
+  APP_ENV: {{ .Values.config.panel.environment | quote }}
+  APP_DEBUG: {{ .Values.config.panel.debug | quote }}
+  APP_URL: {{ .Values.config.panel.appUrl | quote }}
+  APP_TIMEZONE: {{ .Values.config.panel.appTimezone | quote }}
+  APP_SERVICE_AUTHOR: {{ .Values.config.panel.serviceAuthor | quote }}
+  APP_CLEAR_TASKLOG: {{ .Values.config.panel.clearTaskLog | quote }}
+  APP_DELETE_MINUTES: {{ .Values.config.panel.deleteMinutes | quote }}
   PTERODACTYL_FILES_MAX_EDIT_SIZE: "5000000"
   APP_ENVIRONMENT_ONLY: "false"
   APP_LOCALE: "en"
@@ -29,5 +29,5 @@ data:
 
   REDIS_HOST: {{ include "pterodactyl.fullname" . }}-cache.{{ .Release.Namespace }}.{{ .Values.clusterDomain }}
   REDIS_PASSWORD: "null"
-  REDIS_PORT: {{ .Values.cache.service.port | default 6379 }}
+  REDIS_PORT: {{ .Values.cache.service.port | default 6379  | quote }}
 {{- end}}
