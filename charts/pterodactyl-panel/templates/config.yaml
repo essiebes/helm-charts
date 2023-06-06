@@ -26,8 +26,4 @@ data:
   QUEUE_CONNECTION: "redis"
 
   SESSION_SECURE_COOKIE: "true"
-
-  REDIS_HOST: {{ include "pterodactyl.fullname" . }}-cache.{{ .Release.Namespace }}.{{ .Values.clusterDomain }}
-  REDIS_PASSWORD: "null"
-  REDIS_PORT: {{ .Values.cache.service.port | default 6379  | quote }}
 {{- end}}

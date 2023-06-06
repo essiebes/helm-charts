@@ -50,6 +50,7 @@ config:
     appUrl: "http://panel.example.com"
     appTimezone: "UTC"
     serviceAuthor: "noreply@example.com"
+    clearTaskLog: 720
     deleteMinutes: 10
 
     logChannel: "stderr"

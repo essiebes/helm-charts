@@ -46,7 +46,7 @@ spec:
               subPath: env
           env:
             - name: REDIS_HOST
-              value: {{ include "pterodactyl.fullname" . }}-cache.{{ .Release.Namespace }}.{{ .Values.clusterDomain }}
+              value: {{ include "pterodactyl.fullname" . }}-cache.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}
             - name: REDIS_PASSWORD
               value: "null"
             - name: REDIS_PORT
