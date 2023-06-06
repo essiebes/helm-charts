@@ -1,0 +1,29 @@
+cache:
+  repository:
+    image: redis
+    tag: ""
+panel:
+  environment:
+    APP_ENV: production
+    APP_ENVIRONMENT_ONLY: "false"
+    APP_KEY: CHANGE_ME
+    APP_SERVICE_AUTHOR: noreply@essiebes.nl
+    APP_TIMEZONE: Europe/Amsterdam
+    APP_URL: https://control.essiebes.nl
+    CACHE_DRIVER: redis
+    DB_PASSWORD: CHANGE_ME
+    LOG_CHANNEL: stderr
+    MAIL_DRIVER: log
+    MAIL_ENCRYPTION: "true"
+    MAIL_FROM: noreply@essiebes.nl
+    MAIL_HOST: mail
+    MAIL_PASSWORD: ""
+    MAIL_PORT: "1025"
+    MAIL_USERNAME: ""
+    QUEUE_DRIVER: redis
+    REDIS_HOST: cache
+    SESSION_DRIVER: redis
+    TRUSTED_PROXIES: '*'
+  repository:
+    image: ghcr.io/pterodactyl/panel
+    tag: latest

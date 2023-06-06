@@ -1,0 +1,8 @@
+# Create on 2023-06-06T15:49:03+02:00
+# Katenary command line: katenary convert -c docker-compose.yaml -o templates/
+apiVersion: v2
+appVersion: 0.0.1
+description: A helm chart for pterodactyl-panel
+name: pterodactyl-panel
+type: application
+version: 0.1.0
