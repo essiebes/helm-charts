@@ -16,7 +16,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 configMapRef: "essies-message-relay-config"
-secretRef: "essies-message-relay-secret"
+secretRef: "essies-message-relay-secrets"
 
 serviceAccount:
   # Specifies whether a service account should be created
