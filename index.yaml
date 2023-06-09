@@ -158,6 +158,20 @@ entries:
   essies-foundry-bot:
   - apiVersion: v2
     appVersion: 1.0.2
+    created: "2023-06-09T13:25:17.171705458Z"
+    description: Foundry Control Pterodactyl Discord Bot
+    digest: c207b4f380fc3e8535e0bf1f90341a5b49b78497442052eb9003fb8cc5b17c7c
+    maintainers:
+    - email: essie@essiebes.nl
+      name: essiebes
+      url: https://essiebes.nl
+    name: essies-foundry-bot
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/essies-foundry-bot-0.2.0/essies-foundry-bot-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.0.2
     created: "2023-06-05T18:09:38.217159636Z"
     description: Foundry Control Pterodactyl Discord Bot
     digest: 9a0de34c534c94b8be26dc28b150a209c7105bcc4de82228a9d64b7687e3b11a
@@ -240,6 +254,21 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/essies-foundry-bot-0.1.1/essies-foundry-bot-0.1.1.tgz
     version: 0.1.1
+  essies-message-relay:
+  - apiVersion: v2
+    appVersion: 1.0.2
+    created: "2023-06-09T13:25:18.423565804Z"
+    description: Bi-directional Discord to Telegram relaying
+    digest: a5f8d8428223134fdaafd0ac89aee13be6d701d112425181a64cfb3ddf1d62d1
+    maintainers:
+    - email: essie@essiebes.nl
+      name: essiebes
+      url: https://essiebes.nl
+    name: essies-message-relay
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/essies-message-relay-0.1.0/essies-message-relay-0.1.0.tgz
+    version: 0.1.0
   essies-server-tool:
   - apiVersion: v2
     appVersion: 1.0.2
@@ -366,4 +395,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/pterodactyl-panel-0.1.0/pterodactyl-panel-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-06T19:13:21.371837648Z"
+generated: "2023-06-09T13:25:18.423790105Z"
