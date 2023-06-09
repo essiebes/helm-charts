@@ -271,6 +271,20 @@ entries:
   essies-message-relay:
   - apiVersion: v2
     appVersion: 1.0.2
+    created: "2023-06-09T13:43:24.442578753Z"
+    description: Bi-directional Discord to Telegram relaying
+    digest: df3efc8f32d4898c46a78900adeccadf14b6552835413de1a9cae191d972bd1e
+    maintainers:
+    - email: essie@essiebes.nl
+      name: essiebes
+      url: https://essiebes.nl
+    name: essies-message-relay
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/essies-message-relay-0.1.2/essies-message-relay-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.0.2
     created: "2023-06-09T13:40:51.626553995Z"
     description: Bi-directional Discord to Telegram relaying
     digest: 3411427f25ea21b3897b3052196fb19fa7b4032266388c6fcd5992623aea3bfe
@@ -423,4 +437,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/pterodactyl-panel-0.1.0/pterodactyl-panel-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-09T13:40:51.626639196Z"
+generated: "2023-06-09T13:43:24.442634053Z"
