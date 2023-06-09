@@ -36,9 +36,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:essies-foundry-bot-{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: DB_FILE
-              value: /app/db/db.json
           envFrom:
             - configMapRef:
                 name: {{ .Values.configMapRef }}
