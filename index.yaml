@@ -341,6 +341,20 @@ entries:
     version: 0.1.0
   essies-server-tool:
   - apiVersion: v2
+    appVersion: 1.0.3
+    created: "2023-06-17T11:02:40.673993664Z"
+    description: Pterodactyl Control Discord Bot
+    digest: 297ab7594688d2bd29c3c6e147e2417ddda98bf1b64fbc62122ca14ab8b31a65
+    maintainers:
+    - email: essie@essiebes.nl
+      name: essiebes
+      url: https://essiebes.nl
+    name: essies-server-tool
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/essies-server-tool-0.1.1/essies-server-tool-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 1.0.2
     created: "2023-02-26T20:54:42.439327971Z"
     description: Pterodactyl Control Discord Bot
@@ -465,4 +479,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/pterodactyl-panel-0.1.0/pterodactyl-panel-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-09T13:58:35.371205733Z"
+generated: "2023-06-17T11:02:40.674203167Z"
