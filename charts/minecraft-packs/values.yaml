@@ -66,6 +66,10 @@ persistence:
   size: 500Mi
   existingClaim: null
 
+service:
+  type: ClusterIP
+  port: 80
+
 nodeSelector: {}
 
 tolerations: []
