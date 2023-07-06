@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "essies-foundry-bot.fullname" . }}
+  name: {{ include "essies-message-relay.fullname" . }}
   labels:
-    {{- include "essies-foundry-bot.labels" . | nindent 4 }}
+    {{- include "essies-message-relay.labels" . | nindent 4 }}
 spec:
   {{- if and (.Values.replicaCount) }}
   replicas: {{ .Values.replicaCount }}
@@ -13,7 +13,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "essies-foundry-bot.selectorLabels" . | nindent 6 }}
+      {{- include "essies-message-relay.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,24 +21,27 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "essies-foundry-bot.selectorLabels" . | nindent 8 }}
+        {{- include "essies-message-relay.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "essies-foundry-bot.serviceAccountName" . }}
+      serviceAccountName: {{ include "essies-message-relay.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:essies-foundry-bot-{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:essies-message-relay-{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/bin/sh","-c"]
+          args: ["cp /etc/config/settings.json /app/settings.json && node app.js"]
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config
           envFrom:
-            - configMapRef:
-                name: {{ .Values.configMapRef }}
             - secretRef:
                 name: {{ .Values.secretRef }}
           resources:
@@ -55,3 +58,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Values.configMapRef }}
