@@ -396,6 +396,21 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/essies-server-tool-0.1.0/essies-server-tool-0.1.0.tgz
     version: 0.1.0
+  minecraft-packs:
+  - apiVersion: v2
+    appVersion: 1.25.1
+    created: "2023-07-06T18:46:36.901597658Z"
+    description: Minecraft resource packs
+    digest: 2ff0d0a7d117483a6173c655716a550ac0555e17c9b4298406c7b3fefdb32d87
+    maintainers:
+    - email: essie@essiebes.nl
+      name: essiebes
+      url: https://essiebes.nl
+    name: minecraft-packs
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/minecraft-packs-0.1.0/minecraft-packs-0.1.0.tgz
+    version: 0.1.0
   pterodactyl-panel:
   - apiVersion: v2
     appVersion: v1.11.3
@@ -507,4 +522,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/pterodactyl-panel-0.1.0/pterodactyl-panel-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-17T19:08:18.010191106Z"
+generated: "2023-07-06T18:46:36.901649958Z"
