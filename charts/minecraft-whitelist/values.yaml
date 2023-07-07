@@ -28,6 +28,7 @@ resources: {}
 config:
   existingRef: ""
     
+  appName: "Server Whitelist"
   environment: production
   debug: false
   appUrl: "http://panel.example.com"
