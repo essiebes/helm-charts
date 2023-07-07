@@ -17,4 +17,5 @@ data:
   QUEUE_CONNECTION: "sync"
 
   SESSION_SECURE_COOKIE: "true"
+  AUTO_ACCEPT: {{ .Values.config.autoAccept | quote }}
 {{- end}}

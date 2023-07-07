@@ -35,6 +35,7 @@ config:
 
   logChannel: "stderr"
   trustedProxies: "*"
+  autoAccept: false
 
 secrets:
   existingRef: ""
@@ -56,6 +57,7 @@ secrets:
     username: pterodactyl
     password: ""
     database: "panel"
+    prefix: "larv_"
 
 serviceAccount:
   # Specifies whether a service account should be created
