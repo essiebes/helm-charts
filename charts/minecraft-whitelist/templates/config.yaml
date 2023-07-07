@@ -1,0 +1,20 @@
+{{- if not .Values.config.existingRef }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "minecraft-whitelist.configMapRef" . }}
+  labels:
+    {{- include "minecraft-whitelist.labels" . | nindent 4 }}
+data:
+  APP_ENV: {{ .Values.config.environment | quote }}
+  APP_DEBUG: {{ .Values.config.debug | quote }}
+  APP_URL: {{ .Values.config.appUrl | quote }}
+  APP_TIMEZONE: {{ .Values.config.appTimezone | quote }}
+  APP_LOCALE: "en"
+
+  CACHE_DRIVER: "file"
+  SESSION_DRIVER: "cookie"
+  QUEUE_CONNECTION: "sync"
+
+  SESSION_SECURE_COOKIE: "true"
+{{- end}}
