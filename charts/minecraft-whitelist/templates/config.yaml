@@ -15,6 +15,7 @@ data:
   CACHE_DRIVER: "file"
   SESSION_DRIVER: "cookie"
   QUEUE_CONNECTION: "sync"
+  ENV_APP_WITH_HORIZON: "false"
 
   SESSION_SECURE_COOKIE: "true"
   AUTO_ACCEPT: {{ .Values.config.autoAccept | quote }}
