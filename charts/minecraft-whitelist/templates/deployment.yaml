@@ -38,7 +38,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.internalPort | default 9000 }}
+              containerPort: {{ .Values.service.internalPort | default 8080 }}
               protocol: TCP
           volumeMounts:
             - mountPath: "/app/var"
