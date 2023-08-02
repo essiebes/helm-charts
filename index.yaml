@@ -427,6 +427,16 @@ entries:
     version: 0.1.0
   minecraft-whitelist:
   - apiVersion: v2
+    appVersion: 1.0.2
+    created: "2023-08-02T21:26:48.858940611Z"
+    description: A Helm chart for the Minecrat Whitelist portal on Kubernetes
+    digest: 9e89f4ac6aeee3b040c85500107d9c596250e570d96591fe14f53840602d7b0e
+    name: minecraft-whitelist
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/minecraft-whitelist-1.0.4/minecraft-whitelist-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
     appVersion: v1.0.2
     created: "2023-08-02T21:23:37.797277693Z"
     description: A Helm chart for the Minecrat Whitelist portal on Kubernetes
@@ -687,4 +697,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/pterodactyl-panel-0.1.0/pterodactyl-panel-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-02T21:23:37.797448994Z"
+generated: "2023-08-02T21:26:48.859338417Z"
