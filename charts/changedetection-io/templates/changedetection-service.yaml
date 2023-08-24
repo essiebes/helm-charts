@@ -3,16 +3,16 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: changedetection
-  name: changedetection
+    {{- include "essies-changedetection-io.labels" . | nindent 4 }}
+  name: {{ include "essies-changedetection-io.fullname" . }}
 spec:
   clusterIP: None
   ports:
-    - name: "5000"
+    - name: http
       port: 5000
-      targetPort: 5000
+      targetPort: http
   selector:
-    io.kompose.service: changedetection
+    {{- include "essies-changedetection-io.selectorLabels" . | nindent 4 }}
   type: ClusterIP
 status:
   loadBalancer: {}

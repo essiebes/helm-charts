@@ -1,46 +1,58 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  creationTimestamp: null
+  name: {{ include "essies-changedetection-io.fullname" . }}
   labels:
-    io.kompose.service: changedetection
-  name: changedetection
+    {{- include "essies-changedetection-io.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  {{- if and (.Values.replicaCount) }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  {{- if .Values.revisionHistoryLimit }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  {{- end }}
   selector:
     matchLabels:
-      io.kompose.service: changedetection
-  serviceName: changedetection
+      {{- include "essies-changedetection-io.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.network/changedetection-io-default: "true"
-        io.kompose.service: changedetection
+        {{- include "essies-changedetection-io.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - env:
+        - name: {{ .Chart.Name }}
+          env:
             - name: PGID
               value: "1000"
             - name: PUID
               value: "1000"
             - name: TZ
               value: Europe/Amsterdam
-          image: lscr.io/linuxserver/changedetection.io:latest
-          name: changedetection
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           ports:
             - containerPort: 5000
-          resources: {}
+              name: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /config
               name: config
-      restartPolicy: Always
-  updateStrategy: {}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
   volumeClaimTemplates:
     - metadata:
-        creationTimestamp: null
         labels:
-          io.kompose.service: config
+          {{- include "essies-changedetection-io.labels" . | nindent 4 }}
         name: config
       spec:
         accessModes:
@@ -48,6 +60,3 @@ spec:
         resources:
           requests:
             storage: 100Mi
-      status: {}
-status:
-  replicas: 0
