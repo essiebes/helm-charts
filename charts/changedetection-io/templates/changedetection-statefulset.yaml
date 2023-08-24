@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: changedetection
+  name: changedetection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: changedetection
+  serviceName: changedetection
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.network/changedetection-io-default: "true"
+        io.kompose.service: changedetection
+    spec:
+      containers:
+        - env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: Europe/Amsterdam
+          image: lscr.io/linuxserver/changedetection.io:latest
+          name: changedetection
+          ports:
+            - containerPort: 5000
+          resources: {}
+          volumeMounts:
+            - mountPath: /config
+              name: config
+      restartPolicy: Always
+  updateStrategy: {}
+  volumeClaimTemplates:
+    - metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: config
+        name: config
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Mi
+      status: {}
+status:
+  replicas: 0
