@@ -3,6 +3,20 @@ entries:
   changedetection-io:
   - apiVersion: v2
     appVersion: 0.44.1
+    created: "2023-08-24T18:49:13.126454558Z"
+    description: Helm chart for simple docker image changedetection.io
+    digest: 518b2f72726c6af0967c9ba4372399f750692038b81a1fa03e84456574ac5264
+    maintainers:
+    - email: essie@essiebes.nl
+      name: essiebes
+      url: https://essiebes.nl
+    name: changedetection-io
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/changedetection-io-0.1.1/changedetection-io-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.44.1
     created: "2023-08-24T18:22:22.325867456Z"
     description: Helm chart for simple docker image changedetection.io
     digest: 1e4663bcebceb46983b61a0ee540093ec688eecac90ad96bebef30d8818405bb
@@ -754,4 +768,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/pterodactyl-panel-0.1.0/pterodactyl-panel-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-24T18:22:22.326006059Z"
+generated: "2023-08-24T18:49:13.126910163Z"
