@@ -28,6 +28,7 @@ ingress:
 
   annotations: {}
 
+networkPolicy: {}
 
 api:
   image:
