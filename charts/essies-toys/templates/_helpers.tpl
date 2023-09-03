@@ -42,11 +42,18 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
+Selector labels shared
+*/}}
+{{- define "essies-toys.selectorLabels.shared" -}}
+app.kubernetes.io/name: {{ include "essies-toys.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
 Selector labels API
 */}}
 {{- define "essies-toys.selectorLabels.api" -}}
-app.kubernetes.io/name: {{ include "essies-toys.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "essies-toys.selectorLabels.shared" . }}
 app.kubernetes.io/component: api
 {{- end }}
 
@@ -54,8 +61,7 @@ app.kubernetes.io/component: api
 Selector labels Frontend
 */}}
 {{- define "essies-toys.selectorLabels.frontend" -}}
-app.kubernetes.io/name: {{ include "essies-toys.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "essies-toys.selectorLabels.shared" . }}
 app.kubernetes.io/component: frontend
 {{- end }}
 
