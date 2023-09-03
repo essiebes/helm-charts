@@ -1,0 +1,50 @@
+{{- if .Values.ingress.enabled }}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "essies-toys.fullname" . }}-cert
+spec:
+  secretName: {{ include "essies-toys.fullname" . }}-cert
+  issuerRef:
+    name: {{ .Values.ingress.certificate.issuerRef }}
+    kind: {{ .Values.ingress.certificate.issuerKind }}
+  commonName: {{ .Values.ingress.domain }}
+  dnsNames:
+    - {{ .Values.ingress.domain }}
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: {{ include "essies-toys.fullname" . }}
+  labels:
+    {{- include "essies-toys.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.class }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.domain }}
+      secretName: {{ include "essies-toys.fullname" . }}-cert
+  rules:
+    - host: {{ .Values.ingress.domain }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "essies-toys.fullname" . }}-frontend
+                port: 
+                  name: http
+          - path: /api/v1
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "essies-toys.fullname" . }}-api
+                port:
+                  name: http
+{{- end }}
