@@ -481,6 +481,17 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/essies-server-tool-0.1.0/essies-server-tool-0.1.0.tgz
     version: 0.1.0
+  essies-toys:
+  - apiVersion: v2
+    appVersion: v0.1.0
+    created: "2023-09-03T15:47:45.746742722Z"
+    description: Helm chart for the essies toys packages
+    digest: 101179b18c4e50376feed69c0dac835ef4f61cc7c133e7f7efee8e9376232cfc
+    name: essies-toys
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/essies-toys-0.1.0/essies-toys-0.1.0.tgz
+    version: 0.1.0
   minecraft-packs:
   - apiVersion: v2
     appVersion: 1.25.1
@@ -782,4 +793,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/pterodactyl-panel-0.1.0/pterodactyl-panel-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-24T18:58:55.130235838Z"
+generated: "2023-09-03T15:47:45.746853124Z"
