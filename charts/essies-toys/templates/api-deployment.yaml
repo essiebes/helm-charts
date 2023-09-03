@@ -20,7 +20,7 @@ spec:
       labels:
         {{- include "essies-toys.selectorLabels.api" . | nindent 8 }}
     spec:
-      {{- with .Values.api.imagePullSecrets }}
+      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
