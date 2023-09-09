@@ -483,6 +483,16 @@ entries:
     version: 0.1.0
   essies-toys:
   - apiVersion: v2
+    appVersion: 0.1.4
+    created: "2023-09-09T16:31:38.352695677Z"
+    description: Helm chart for the essies toys packages
+    digest: 3c8aed1e21f98fffb39eed49a28aed8110ecf6cf313b1700c55b1bdc606ea132
+    name: essies-toys
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/essies-toys-0.2.3/essies-toys-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v2
     appVersion: 0.1.3
     created: "2023-09-09T16:24:03.164858153Z"
     description: Helm chart for the essies toys packages
@@ -943,4 +953,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/pterodactyl-panel-0.1.0/pterodactyl-panel-0.1.0.tgz
     version: 0.1.0
-generated: "2023-09-09T16:24:03.165170654Z"
+generated: "2023-09-09T16:31:38.35294498Z"
