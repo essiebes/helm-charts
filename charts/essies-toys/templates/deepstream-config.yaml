@@ -25,7 +25,7 @@ data:
     auth:
       - type: http
         options:
-          endpointUrl: http://{{ include "essies-toys.fullname" . }}-api:{{ .Values.api.service.port }}/socket/auth
+          endpointUrl: http://{{ include "essies-toys.fullname" . }}-api:{{ .Values.api.service.port }}/api/v1/socket/auth
           permittedStatusCodes: [ 200 ]
           requestTimeout: 2000
           retryStatusCodes: [ 404, 504 ]
