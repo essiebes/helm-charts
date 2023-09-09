@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "essies-toys.fullname" . }}-deepstream-config
 data:
-  config.yaml: |
+  config.yml: |
     logLevel: INFO
 
     permission:
@@ -33,7 +33,7 @@ data:
           retryInterval: 5000
           reportInvalidParameters: true # return when credentials are incorrect: missing username or password
 
-  permissions.yaml: |
+  permissions.yml: |
     presence:
       "*":
         allow: false
