@@ -8,8 +8,8 @@ spec:
   type: {{ .Values.deepstream.service.type }}
   ports:
     - port: {{ .Values.deepstream.service.port }}
-      targetPort: http
+      targetPort: ws
       protocol: TCP
-      name: http
+      name: ws
   selector:
     {{- include "essies-toys.selectorLabels.deepstream" . | nindent 4 }}
