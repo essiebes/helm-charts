@@ -40,13 +40,6 @@ spec:
                 name: {{ include "essies-toys.fullname" . }}-frontend
                 port: 
                   name: http
-          - path: /deepstream
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ include "essies-toys.fullname" . }}-deepstream
-                port:
-                  name: ws
           - path: /api/v1
             pathType: Prefix
             backend:

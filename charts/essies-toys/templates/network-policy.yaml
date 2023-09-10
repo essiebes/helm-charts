@@ -10,10 +10,6 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    - from:
-      - podSelector:
-          matchLabels:
-            {{- include "essies-toys.selectorLabels.deepstream" . | nindent 12 }}
     {{- with .Values.networkPolicy }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
