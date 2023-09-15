@@ -48,13 +48,9 @@ spec:
               port: ws
           resources:
             {{- toYaml .Values.socketio.resources | nindent 12 }}
-          volumeMounts:
-            - name: config-volume
-              mountPath: /usr/local/socketio/conf/config.yml
-              subPath: config.yml
-            - name: config-volume
-              mountPath: /usr/local/socketio/conf/permissions.yml
-              subPath: permissions.yml
+          envFrom:
+            - configMapRef:
+                name: {{ include "essies-toys.fullname" . }}-socketio-config
       {{- with .Values.socketio.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -67,7 +63,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      volumes:
-        - name: config-volume
-          configMap:
-            name: {{ include "essies-toys.fullname" . }}-socketio-config
