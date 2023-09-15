@@ -13,7 +13,10 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-            {{- include "essies-toys.selectorLabels.deepstream" . | nindent 12 }}
+            {{- include "essies-toys.selectorLabels.socketio" . | nindent 12 }}
+        namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: {{ .Release.Namespace }}
     {{- with .Values.networkPolicy }}
       {{- toYaml . | nindent 4 }}
     {{- end }}

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "essies-toys.fullname" . }}-socketio-config
+data:
+  SOCKET_PORT: "{{ .Values.socketio.service.port }}"
+  SOCKET_PATH: "{{ .Values.socketio.service.path }}"
+  LOG_LEVEL: "{{ .Values.socketio.logLevel }}"
+  AUTH_WEBHOOK_URL: "{{ .Values.socketio.authWebhookUrl }}"
+  AUTH_RULES_WEBHOOK_URL: "{{ .Values.socketio.authRulesWebhookUrl }}"

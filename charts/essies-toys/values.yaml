@@ -135,18 +135,22 @@ frontend:
 
   affinity: {}
 
-deepstream:
+socketio:
   image:
-    repository: deepstreamio/deepstream.io
+    repository: essiebes/socket.io-server
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: "7.0.7-alpine"
+    tag: "1.0.1-alpine"
 
   replicaCount: 1
 
+  logLevel: info
+  authWebhookUrl: "http://essies-toys-api:8080/api/v1/socket/auth"
+  authRulesWebhookUrl: "http://essies-toys-api:8080/api/v1/socket/rules"
+
   service:
     type: ClusterIP
-    port: 6020
+    port: 3000
+    path: "/socket.io/"
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -159,13 +163,6 @@ deepstream:
     # requests:
     #   cpu: 100m
     #   memory: 128Mi
-
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 100
-    targetCPUUtilizationPercentage: 80
-    # targetMemoryUtilizationPercentage: 80
 
   podAnnotations: {}
 

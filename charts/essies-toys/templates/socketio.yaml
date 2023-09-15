@@ -1,24 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "essies-toys.fullname" . }}-deepstream
+  name: {{ include "essies-toys.fullname" . }}-socketio
   labels:
     {{- include "essies-toys.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.deepstream.autoscaling.enabled }}
-  replicas: {{ .Values.deepstream.replicaCount }}
-  {{- end }}
+  replicas: {{ .Values.socketio.replicaCount }}
   selector:
     matchLabels:
-      {{- include "essies-toys.selectorLabels.deepstream" . | nindent 6 }}
+      {{- include "essies-toys.selectorLabels.socketio" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.deepstream.podAnnotations }}
+      {{- with .Values.socketio.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "essies-toys.selectorLabels.deepstream" . | nindent 8 }}
+        {{- include "essies-toys.selectorLabels.socketio" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -26,16 +24,16 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "essies-toys.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.deepstream.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.socketio.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.deepstream.securityContext | nindent 12 }}
-          image: "{{ .Values.deepstream.image.repository }}:{{ .Values.deepstream.image.tag }}"
-          imagePullPolicy: {{ .Values.deepstream.image.pullPolicy }}
+            {{- toYaml .Values.socketio.securityContext | nindent 12 }}
+          image: "{{ .Values.socketio.image.repository }}:{{ .Values.socketio.image.tag }}"
+          imagePullPolicy: {{ .Values.socketio.image.pullPolicy }}
           ports:
             - name: ws
-              containerPort: {{ .Values.deepstream.service.port }}
+              containerPort: {{ .Values.socketio.service.port }}
               protocol: TCP
           startupProbe:
             tcpSocket:
@@ -49,27 +47,27 @@ spec:
             tcpSocket:
               port: ws
           resources:
-            {{- toYaml .Values.deepstream.resources | nindent 12 }}
+            {{- toYaml .Values.socketio.resources | nindent 12 }}
           volumeMounts:
             - name: config-volume
-              mountPath: /usr/local/deepstream/conf/config.yml
+              mountPath: /usr/local/socketio/conf/config.yml
               subPath: config.yml
             - name: config-volume
-              mountPath: /usr/local/deepstream/conf/permissions.yml
+              mountPath: /usr/local/socketio/conf/permissions.yml
               subPath: permissions.yml
-      {{- with .Values.deepstream.nodeSelector }}
+      {{- with .Values.socketio.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.deepstream.affinity }}
+      {{- with .Values.socketio.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.deepstream.tolerations }}
+      {{- with .Values.socketio.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
         - name: config-volume
           configMap:
-            name: {{ include "essies-toys.fullname" . }}-deepstream-config
+            name: {{ include "essies-toys.fullname" . }}-socketio-config

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "essies-toys.fullname" . }}-socketio
+  labels:
+    {{- include "essies-toys.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.socketio.service.type }}
+  ports:
+    - port: {{ .Values.socketio.service.port }}
+      targetPort: ws
+      protocol: TCP
+      name: ws
+  selector:
+    {{- include "essies-toys.selectorLabels.socketio" . | nindent 4 }}

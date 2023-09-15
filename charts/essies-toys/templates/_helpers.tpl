@@ -66,9 +66,9 @@ app.kubernetes.io/component: frontend
 {{- end }}
 
 {{/*
-Selector labels Deepstream
+Selector labels Socketio
 */}}
-{{- define "essies-toys.selectorLabels.deepstream" -}}
+{{- define "essies-toys.selectorLabels.socketio" -}}
 {{ include "essies-toys.selectorLabels.shared" . }}
 app.kubernetes.io/component: deapstream
 {{- end }}
