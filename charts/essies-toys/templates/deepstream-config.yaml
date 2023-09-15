@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "essies-toys.fullname" . }}-deepstream-config
+data:
+  config.yml: |
+    logLevel: INFO
+
+    permission:
+      type: config
+      options:
+        # Permissions file
+        permissions: fileLoad(permissions.yml)
+        # Amount of times nested cross-references will be loaded. Avoids endless loops
+        maxRuleIterations: 3
+        # PermissionResults are cached to increase performance. Lower number means more loading
+        cacheEvacuationInterval: 60000
+
+    enabledFeatures:
+      record: true
+      event: true
+      rpc: true
+      presence: true
+
+    auth:
+      - type: http
+        options:
+          endpointUrl: http://{{ include "essies-toys.fullname" . }}-api:{{ .Values.api.service.port }}/api/v1/socket/auth
+          permittedStatusCodes: [ 200 ]
+          requestTimeout: 2000
+          retryStatusCodes: [ 404, 504 ]
+          retryAttempts: 3
+          retryInterval: 5000
+          reportInvalidParameters: true # return when credentials are incorrect: missing username or password
+
+  permissions.yml: |
+    presence:
+      "*":
+        allow: false
+    record:
+      "*":
+        create: false
+        write: false
+        read: false
+        delete: false
+        listen: false
+        notify: false
+    event:
+      "locks/$lockId":
+        subscribe: user.data.events.subscribe.indexOf('/locks/' + $lockId) > -1
+        publish: user.data.events.publish.indexOf('/locks/' + $lockId) > -1
+        listen: false
+      "*":
+        subscribe: false
+        publish: false
+        listen: false
+    rpc:
+      "*":
+        provide: false
+        request: false

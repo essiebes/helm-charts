@@ -65,6 +65,13 @@ Selector labels Frontend
 app.kubernetes.io/component: frontend
 {{- end }}
 
+{{/*
+Selector labels Deepstream
+*/}}
+{{- define "essies-toys.selectorLabels.deepstream" -}}
+{{ include "essies-toys.selectorLabels.shared" . }}
+app.kubernetes.io/component: deapstream
+{{- end }}
 
 {{/*
 Create the name of the service account to use

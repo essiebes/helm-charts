@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "essies-toys.fullname" . }}-deepstream
+  labels:
+    {{- include "essies-toys.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.deepstream.autoscaling.enabled }}
+  replicas: {{ .Values.deepstream.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "essies-toys.selectorLabels.deepstream" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.deepstream.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "essies-toys.selectorLabels.deepstream" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "essies-toys.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.deepstream.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.deepstream.securityContext | nindent 12 }}
+          image: "{{ .Values.deepstream.image.repository }}:{{ .Values.deepstream.image.tag }}"
+          imagePullPolicy: {{ .Values.deepstream.image.pullPolicy }}
+          ports:
+            - name: ws
+              containerPort: {{ .Values.deepstream.service.port }}
+              protocol: TCP
+          startupProbe:
+            tcpSocket:
+              port: ws
+            failureThreshold: 30
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: ws
+          readinessProbe:
+            tcpSocket:
+              port: ws
+          resources:
+            {{- toYaml .Values.deepstream.resources | nindent 12 }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/local/deepstream/conf/config.yml
+              subPath: config.yml
+            - name: config-volume
+              mountPath: /usr/local/deepstream/conf/permissions.yml
+              subPath: permissions.yml
+      {{- with .Values.deepstream.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deepstream.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deepstream.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "essies-toys.fullname" . }}-deepstream-config
