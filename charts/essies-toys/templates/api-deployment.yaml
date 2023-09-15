@@ -8,6 +8,7 @@ spec:
   {{- if not .Values.api.autoscaling.enabled }}
   replicas: {{ .Values.api.replicaCount }}
   {{- end }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "essies-toys.selectorLabels.api" . | nindent 6 }}

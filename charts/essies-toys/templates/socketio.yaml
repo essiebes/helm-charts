@@ -6,6 +6,7 @@ metadata:
     {{- include "essies-toys.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.socketio.replicaCount }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "essies-toys.selectorLabels.socketio" . | nindent 6 }}
