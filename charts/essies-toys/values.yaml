@@ -139,13 +139,14 @@ socketio:
   image:
     repository: essiebes/socket.io-server
     pullPolicy: IfNotPresent
-    tag: "1.0.1-alpine"
+    tag: "1.1.0-alpine"
 
   replicaCount: 1
 
   logLevel: info
   authWebhookUrl: "http://essies-toys-api:8080/api/v1/socket/auth"
   authRulesWebhookUrl: "http://essies-toys-api:8080/api/v1/socket/rules"
+  authRulesCacheSeconds: 10
 
   service:
     type: ClusterIP

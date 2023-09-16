@@ -8,3 +8,4 @@ data:
   LOG_LEVEL: "{{ .Values.socketio.logLevel }}"
   AUTH_WEBHOOK_URL: "{{ .Values.socketio.authWebhookUrl }}"
   AUTH_RULES_WEBHOOK_URL: "{{ .Values.socketio.authRulesWebhookUrl }}"
+  AUTH_RULES_CACHE_SECONDS: "{{ .Values.socketio.authRulesCacheSeconds }}"
