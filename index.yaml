@@ -1073,4 +1073,18 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/pterodactyl-panel-0.1.0/pterodactyl-panel-0.1.0.tgz
     version: 0.1.0
-generated: "2023-09-16T19:59:00.763733668Z"
+  xbackbone:
+  - apiVersion: v2
+    created: "2023-09-19T17:55:27.941133593Z"
+    description: Helm chart for simple docker image linuxserver/xbackbone
+    digest: 2deec746c5fe98187e108a02b71e42bbf85ba35a8f89a7d2e7c49363d56ca257
+    maintainers:
+    - email: essie@essiebes.nl
+      name: essiebes
+      url: https://essiebes.nl
+    name: xbackbone
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/xbackbone-0.1.0/xbackbone-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-09-19T17:55:27.941288093Z"
