@@ -483,6 +483,16 @@ entries:
     version: 0.1.0
   essies-toys:
   - apiVersion: v2
+    appVersion: 0.3.2
+    created: "2023-09-20T17:17:13.638466547Z"
+    description: Helm chart for the essies toys packages
+    digest: 240d072ca743ef05a523bf8a08809495ef76a348eff5bbd61b2c1ee40d85a2ce
+    name: essies-toys
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/essies-toys-0.4.2/essies-toys-0.4.2.tgz
+    version: 0.4.2
+  - apiVersion: v2
     appVersion: 0.3.1
     created: "2023-09-16T19:59:00.76336142Z"
     description: Helm chart for the essies toys packages
@@ -1087,4 +1097,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/xbackbone-0.1.0/xbackbone-0.1.0.tgz
     version: 0.1.0
-generated: "2023-09-19T17:55:27.941288093Z"
+generated: "2023-09-20T17:17:13.638761351Z"
