@@ -1,1 +1,0 @@
-This application doesn't expose any API sources and communiates directly with the Discord API
