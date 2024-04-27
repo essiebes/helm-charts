@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "essies-changedetection-io.fullname" . }}
+  name: {{ include "pterodactyl.fullname" . }}
   labels:
-    {{- include "essies-changedetection-io.labels" . | nindent 4 }}
+    {{- include "pterodactyl.labels" . | nindent 4 }}
 spec:
-  {{- if and (.Values.replicaCount) }}
-  replicas: {{ .Values.replicaCount }}
+  {{- if and (.Values.panel.replicaCount) }}
+  replicas: {{ .Values.panel.replicaCount }}
   {{- end }}
   {{- if .Values.revisionHistoryLimit }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "essies-changedetection-io.selectorLabels" . | nindent 6 }}
+      {{- include "pterodactyl.selectorLabels.panel" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,33 +21,41 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "essies-changedetection-io.selectorLabels" . | nindent 8 }}
+        {{- include "pterodactyl.selectorLabels.panel" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      serviceAccountName: {{ include "pterodactyl.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: panel
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          env:
-            - name: PGID
-              value: "1000"
-            - name: PUID
-              value: "1000"
-            - name: TZ
-              value: Europe/Amsterdam
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.panel.image.repository }}:{{ .Values.panel.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.panel.image.pullPolicy }}
           ports:
-            - containerPort: 5000
+            - name: http
+              containerPort: {{ .Values.panel.service.internalPort | default 80 }}
               protocol: TCP
-              name: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: "/app/var"
+              name: app-var
+              subPath: env
+          env:
+            - name: REDIS_HOST
+              value: {{ include "pterodactyl.fullname" . }}-cache
+            - name: REDIS_PASSWORD
+              value: "null"
+            - name: REDIS_PORT
+              value: {{ .Values.cache.service.port | default 6379 | quote }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "pterodactyl.configMapRef" . }}
+            - secretRef:
+                name: {{ include "pterodactyl.secretRef" . }}
           {{- if .Values.probesEnabled }}
           startupProbe:
             tcpSocket:
@@ -67,9 +75,8 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 10
           {{- end }}
-          volumeMounts:
-            - mountPath: /config
-              name: config
+          resources:
+            {{- toYaml .Values.panel.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -82,21 +89,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-  volumeClaimTemplates:
-    - metadata:
-        labels:
-          {{- include "essies-changedetection-io.labels" . | nindent 10 }}
-        name: config
-      spec:
-        accessModes:
-          - {{ .Values.persistence.accessMode | quote }}
-        resources:
-          requests:
-            storage: {{ .Values.persistence.size | quote }}
-      {{- if .Values.persistence.storageClass }}
-      {{- if (eq "-" .Values.persistence.storageClass) }}
-        storageClassName: ""
-      {{- else }}
-        storageClassName: "{{ .Values.persistence.storageClass }}"
-      {{- end }}
-      {{- end }}
+      volumes:
+        - name: app-var
+          emptyDir:
+            sizeLimit: 10Mi
