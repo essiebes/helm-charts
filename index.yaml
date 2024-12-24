@@ -975,6 +975,16 @@ entries:
   pterodactyl-panel:
   - apiVersion: v2
     appVersion: v1.11.10
+    created: "2024-12-24T14:02:14.245961472Z"
+    description: A Helm chart for Pterodactyl Panels on Kubernetes
+    digest: ae625aee72423c2b087da0565f6f9063304d12c42a41cdfc8a85792ef79a1c0e
+    name: pterodactyl-panel
+    type: application
+    urls:
+    - https://github.com/essiebes/helm-charts/releases/download/pterodactyl-panel-1.0.3/pterodactyl-panel-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
+    appVersion: v1.11.10
     created: "2024-12-24T14:00:49.771032589Z"
     description: A Helm chart for Pterodactyl Panels on Kubernetes
     digest: 68cf3b170859552cdde04d405f5727888f9942ef4aeed59eaa0ad57ad2b34df5
@@ -1137,4 +1147,4 @@ entries:
     urls:
     - https://github.com/essiebes/helm-charts/releases/download/xbackbone-0.1.0/xbackbone-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-24T14:00:49.771384828Z"
+generated: "2024-12-24T14:02:14.246237557Z"
